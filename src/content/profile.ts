@@ -9,7 +9,10 @@ export const profile = {
   },
   email: "fabianvillalta09@gmail.com",
   githubUrl: "https://github.com/Fabito09",
-  linkedinUrl: "https://www.linkedin.com/in/fabian-villalta-arburola",
+  // La tilde de "fabián" va codificada (%C3%A1) para que el enlace funcione
+  // igual en cualquier navegador y al copiarlo o pegarlo en otro lado.
+  linkedinUrl:
+    "https://www.linkedin.com/in/fabi%C3%A1n-villalta-arburola-343a45338/",
   /** Cada idioma descarga su propia versión del CV. Los PDF viven en /public. */
   cvPath: {
     es: "/cv-fabian-villalta-es.pdf",
