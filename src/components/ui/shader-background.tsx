@@ -442,10 +442,23 @@ export function ShaderBackground({
       )
       const width = Math.max(1, Math.round(rawWidth * pixelScale))
       const height = Math.max(1, Math.round(rawHeight * pixelScale))
-      if (canvas.width !== width || canvas.height !== height) {
-        canvas.width = width
-        canvas.height = height
-        gl.viewport(0, 0, width, height)
+      // Reasignar canvas.width BORRA el canvas, y eso se ve como un parpadeo.
+      // En el celular, la barra del navegador aparece y desaparece al
+      // scrollear, moviendo el alto del viewport todo el tiempo.
+      //
+      // Por eso el canvas solo crece: si el área disponible se achica, el
+      // canvas anterior alcanza igual (el CSS lo ajusta) y no hace falta
+      // redibujarlo. Solo se recorta de verdad ante un cambio grande, como
+      // rotar el teléfono.
+      const muchoMasChico =
+        width < canvas.width * 0.75 || height < canvas.height * 0.75
+      const nextWidth = muchoMasChico ? width : Math.max(width, canvas.width)
+      const nextHeight = muchoMasChico ? height : Math.max(height, canvas.height)
+
+      if (canvas.width !== nextWidth || canvas.height !== nextHeight) {
+        canvas.width = nextWidth
+        canvas.height = nextHeight
+        gl.viewport(0, 0, nextWidth, nextHeight)
       }
     }
 
@@ -491,14 +504,36 @@ export function ShaderBackground({
       targetPresence = 0
       requestRender()
     }
+    // Redimensionar borra el canvas, así que nunca lo hacemos en caliente:
+    // esperamos a que el tamaño se quede quieto. Mientras tanto el shader
+    // sigue dibujando con la resolución anterior, que se estira unos píxeles
+    // sin que se note. Así el parpadeo no aparece durante el scroll del
+    // celular, que es cuando la barra del navegador cambia el alto.
+    let resizeTimer = 0
+    const scheduleResize = () => {
+      window.clearTimeout(resizeTimer)
+      resizeTimer = window.setTimeout(() => {
+        bounds = canvas.getBoundingClientRect()
+        resizeCanvas()
+        requestRender()
+      }, 200)
+    }
+
     const updateLayout = () => {
       bounds = canvas.getBoundingClientRect()
-      resizeCanvas()
+      scheduleResize()
       updatePointerTarget()
       requestRender()
     }
+    // El efecto de cursor solo tiene sentido con mouse. En pantallas táctiles
+    // no se registran estos eventos: el de scroll recalculaba el tamaño en
+    // cada desplazamiento, que es justo lo que provocaba parpadeos en el
+    // celular.
+    const hasMouse = window.matchMedia("(pointer: fine)").matches
+    const cursorTracking = UNIFORMS.cursorEnabled && hasMouse
+
     window.addEventListener("resize", updateLayout)
-    if (UNIFORMS.cursorEnabled) {
+    if (cursorTracking) {
       window.addEventListener("pointermove", onPointerMove, { passive: true })
       window.addEventListener("pointercancel", onPointerLeave)
       window.addEventListener("scroll", updateLayout, true)
@@ -540,7 +575,9 @@ export function ShaderBackground({
       mouseX += (targetX - mouseX) * follow
       mouseY += (targetY - mouseY) * follow
       cursorPresence += (targetPresence - cursorPresence) * follow
-      resizeCanvas()
+      // Acá NO se redimensiona: esto corre en cada cuadro y cambiar el tamaño
+      // del canvas lo borra. De eso se encarga scheduleResize cuando el
+      // tamaño deja de moverse.
       const width = canvas.width
       const height = canvas.height
       gl.uniform4f(
@@ -572,15 +609,18 @@ export function ShaderBackground({
       if (timeAnimated || pointerSettling) requestRender()
       else lastNow = null
     }
+    // Tamaño inicial, ahora que el bucle de dibujo ya no lo calcula solo.
+    resizeCanvas()
     requestRender()
     return () => {
       disposed = true
       cancelAnimationFrame(raf)
+      window.clearTimeout(resizeTimer)
       resizeObserver.disconnect()
       intersectionObserver.disconnect()
       document.removeEventListener("visibilitychange", onVisibilityChange)
       window.removeEventListener("resize", updateLayout)
-      if (UNIFORMS.cursorEnabled) {
+      if (cursorTracking) {
         window.removeEventListener("pointermove", onPointerMove)
         window.removeEventListener("pointercancel", onPointerLeave)
         window.removeEventListener("scroll", updateLayout, true)

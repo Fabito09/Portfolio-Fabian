@@ -129,6 +129,17 @@
 }
 
 @layer components {
+  /* Alto del fondo animado.
+     No usa inset-0 a propósito: en el celular, la barra de direcciones se
+     contrae al scrollear y cambia el alto del viewport. Si el fondo siguiera
+     ese cambio, el canvas se redimensionaría a mitad del scroll, y
+     redimensionar un canvas lo borra: eso se ve como un parpadeo negro.
+     `lvh` es el alto con la barra retraída y no cambia mientras se scrollea. */
+  .site-background {
+    height: 100vh;
+    height: 100lvh;
+  }
+
   /* Panel de vidrio: se repite en tarjetas, chips y cajas de contenido. */
   .glass-panel {
     @apply rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md;

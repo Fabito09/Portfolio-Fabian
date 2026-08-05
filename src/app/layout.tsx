@@ -33,6 +33,9 @@ const description =
   "Portafolio de Fabián Villalta Arburola, desarrollador fullstack. Aplicaciones web completas, de la base de datos a la interfaz.";
 
 export const metadata: Metadata = {
+  // Necesaria para que las redes sociales armen la URL absoluta de la imagen
+  // de vista previa. Sin esto, Next avisa y usa localhost.
+  metadataBase: new URL("https://fabian-villalta.vercel.app"),
   title: {
     default: `${profile.name} — ${profile.role.es}`,
     template: `%s — ${profile.name}`,

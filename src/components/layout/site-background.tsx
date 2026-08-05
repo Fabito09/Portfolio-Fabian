@@ -22,7 +22,10 @@ const BACKGROUND_UNIFORMS = {
 
 export function SiteBackground() {
   return (
-    <div className="pointer-events-none fixed inset-0 z-0" aria-hidden="true">
+    <div
+      className="site-background pointer-events-none fixed inset-x-0 top-0 z-0"
+      aria-hidden="true"
+    >
       {/* Respaldo: si el dispositivo no soporta WebGL o los scripts no corren,
           el canvas queda vacío. Este degradado evita que el fondo sea negro
           plano y mantiene el sitio presentable igual. */}
