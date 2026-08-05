@@ -10,7 +10,7 @@ export function AboutIntro() {
   const { t } = useLanguage();
 
   return (
-    <section id="sobre-mi" className="relative scroll-mt-28 px-5 py-24 sm:px-8">
+    <section id="sobre-mi" className="relative scroll-mt-8 px-5 py-24 sm:px-8">
       {/* minmax(0,…) evita que una palabra larga (el correo) estire la columna
           y desborde la pantalla en móviles angostos. */}
       <div className="mx-auto grid w-full max-w-6xl gap-12 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:items-start">
