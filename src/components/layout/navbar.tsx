@@ -50,7 +50,7 @@ export function Navbar() {
   const { baseSize, magnification } = useDockSizes();
 
   return (
-    <header className="pointer-events-none fixed inset-x-0 bottom-4 z-50 flex justify-center px-3 sm:bottom-6">
+    <header className="pointer-events-none fixed inset-x-0 top-3 z-50 flex justify-center px-3 sm:top-5">
       <Dock
         baseSize={baseSize}
         magnification={magnification}

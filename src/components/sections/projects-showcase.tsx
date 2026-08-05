@@ -21,7 +21,7 @@ export function ProjectsShowcase() {
   return (
     <section
       id="proyectos"
-      className="relative scroll-mt-8 overflow-hidden px-5 py-24 sm:px-8"
+      className="relative scroll-mt-28 overflow-hidden px-5 py-24 sm:px-8"
     >
       <div className="mx-auto w-full max-w-6xl">
         <SectionHeading

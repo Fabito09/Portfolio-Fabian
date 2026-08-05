@@ -69,7 +69,9 @@ export function Dock({
       onMouseLeave={() => mouseX.set(Number.POSITIVE_INFINITY)}
       role="toolbar"
       className={cn(
-        "flex items-end gap-1.5 rounded-full border border-white/12 bg-neutral-950/70 px-2.5 py-2 shadow-2xl shadow-black/50 backdrop-blur-xl sm:gap-2 sm:px-3",
+        // items-start: el dock vive arriba, así que al agrandarse los iconos
+        // crecen hacia abajo, hacia el contenido, y no contra el borde.
+        "flex items-start gap-1.5 rounded-full border border-white/12 bg-neutral-950/70 px-2.5 py-2 shadow-2xl shadow-black/50 backdrop-blur-xl sm:gap-2 sm:px-3",
         className,
       )}
     >
@@ -161,7 +163,11 @@ export function DockItem({
   );
 }
 
-/** Globito con el nombre, visible al apuntar con el mouse o al tabular. */
+/**
+ * Globito con el nombre, visible al apuntar con el mouse o al tabular.
+ * Aparece debajo del icono porque el dock está pegado al borde superior:
+ * arriba se saldría de la pantalla.
+ */
 export function DockLabel({ children }: { children: React.ReactNode }) {
   const { hovered } = useDockItem();
   const [visible, setVisible] = React.useState(false);
@@ -175,13 +181,13 @@ export function DockLabel({ children }: { children: React.ReactNode }) {
     <AnimatePresence>
       {visible ? (
         <motion.span
-          initial={{ opacity: 0, y: 4 }}
-          animate={{ opacity: 1, y: -6 }}
-          exit={{ opacity: 0, y: 4 }}
+          initial={{ opacity: 0, y: -4 }}
+          animate={{ opacity: 1, y: 6 }}
+          exit={{ opacity: 0, y: -4 }}
           transition={{ duration: 0.15 }}
           role="tooltip"
           style={{ x: "-50%" }}
-          className="pointer-events-none absolute -top-9 left-1/2 whitespace-nowrap rounded-full border border-white/15 bg-neutral-900 px-2.5 py-1 text-xs font-medium text-white shadow-lg"
+          className="pointer-events-none absolute -bottom-9 left-1/2 whitespace-nowrap rounded-full border border-white/15 bg-neutral-900 px-2.5 py-1 text-xs font-medium text-white shadow-lg"
         >
           {children}
         </motion.span>

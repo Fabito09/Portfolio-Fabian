@@ -32,7 +32,7 @@ export function Contact() {
   };
 
   return (
-    <section id="contacto" className="relative scroll-mt-8 px-5 py-24 sm:px-8">
+    <section id="contacto" className="relative scroll-mt-28 px-5 py-24 sm:px-8">
       <div className="mx-auto w-full max-w-6xl">
         <div className="glass-panel overflow-hidden p-8 sm:p-12">
           <SectionHeading
