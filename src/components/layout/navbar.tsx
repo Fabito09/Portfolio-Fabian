@@ -51,10 +51,13 @@ export function Navbar() {
 
   return (
     <header className="pointer-events-none fixed inset-x-0 top-3 z-50 flex justify-center px-3 sm:top-5">
+      {/* Sin overflow: recortaba los globitos con el nombre, que asoman por
+          fuera de la barra, y hacía aparecer una barra de scroll cuando los
+          iconos se agrandaban. Los siete entran incluso en 320px. */}
       <Dock
         baseSize={baseSize}
         magnification={magnification}
-        className="pointer-events-auto max-w-full overflow-x-auto"
+        className="pointer-events-auto"
       >
         {NAV_LINKS.map((link) => (
           <DockItem
