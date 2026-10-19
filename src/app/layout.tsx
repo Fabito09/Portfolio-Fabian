@@ -41,6 +41,9 @@ export const metadata: Metadata = {
     template: `%s — ${profile.name}`,
   },
   description,
+  // Le dice a los buscadores cuál es la dirección original. Si alguien copia
+  // el HTML tal cual a otro dominio, la copia sigue apuntando a este sitio.
+  alternates: { canonical: "/" },
   openGraph: {
     title: `${profile.name} — ${profile.role.es}`,
     description,
