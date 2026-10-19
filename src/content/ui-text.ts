@@ -25,8 +25,8 @@ export const uiText = {
       en: "I build websites that feel good to use",
     },
     subline: {
-      es: "Desarrollador freelance y estudiante de programación en Cenfotec. Trabajo el frontend con JavaScript y TypeScript, y el backend con Python, FastAPI y PostgreSQL.",
-      en: "Freelance developer and programming student at Cenfotec. I work the frontend with JavaScript and TypeScript, and the backend with Python, FastAPI and PostgreSQL.",
+      es: "Desarrollador freelance y técnico en Programación Asistida con IA por CENFOTEC. Trabajo el frontend con React y TypeScript, y el backend con Python, FastAPI y PostgreSQL.",
+      en: "Freelance developer and AI-Assisted Programming technician from CENFOTEC. I work the frontend with React and TypeScript, and the backend with Python, FastAPI and PostgreSQL.",
     },
     primaryCta: { es: "Ver proyectos", en: "View projects" },
     secondaryCta: { es: "Contactame", en: "Get in touch" },
@@ -59,7 +59,7 @@ export const uiText = {
       es: "Arrastrá, hacé clic en una tarjeta o usá ← → para navegar.",
       en: "Drag, click a card, or use ← → to navigate.",
     },
-    /** Se usan mientras la lista de proyectos esté vacía. */
+    /** Para las tarjetas en blanco del carrusel y, con la lista vacía, para toda la sección. */
     comingSoon: { es: "Próximamente", en: "Coming soon" },
     emptySubtitle: {
       es: "Estoy preparando esta sección. Muy pronto voy a subir acá los proyectos en los que estoy trabajando.",
@@ -75,12 +75,12 @@ export const uiText = {
     eyebrow: { es: "Sobre mí", en: "About me" },
     title: { es: "Hola, soy Fabián", en: "Hi, I am Fabián" },
     paragraphOne: {
-      es: "Soy desarrollador full stack freelance y estudio Programación Asistida por Inteligencia Artificial en Cenfotec. Hago páginas web para clientes particulares: armo la interfaz con JavaScript y TypeScript, levanto las APIs con Python usando FastAPI o Flask, y guardo los datos en PostgreSQL o Supabase.",
-      en: "I am a freelance full stack developer studying AI-Assisted Programming at Cenfotec. I build websites for private clients: I put together the interface with JavaScript and TypeScript, set up the APIs with Python using FastAPI or Flask, and store the data in PostgreSQL or Supabase.",
+      es: "Soy desarrollador full stack freelance y técnico en Programación Asistida con IA por la Universidad CENFOTEC. Construyo aplicaciones web de punta a punta: armo la interfaz con React, Next.js y TypeScript, levanto las APIs con Python usando FastAPI o Flask, guardo los datos en PostgreSQL o Supabase, y automatizo los procesos repetitivos.",
+      en: "I am a freelance full stack developer and an AI-Assisted Programming technician from Universidad CENFOTEC. I build web applications end to end: I put together the interface with React, Next.js and TypeScript, set up the APIs with Python using FastAPI or Flask, store the data in PostgreSQL or Supabase, and automate repetitive processes.",
     },
     paragraphTwo: {
-      es: "Estoy arrancando en esto y lo tomo en serio: sumo dos certificaciones en Python avanzado y en programación con inteligencia artificial, y sigo formándome. En paralelo trabajo como jefe de piso coordinando un equipo, algo que me enseñó a organizarme, resolver bajo presión y hacerme cargo de lo que prometo.",
-      en: "I am starting out in this and I take it seriously: I hold two certifications in advanced Python and in programming with artificial intelligence, and I keep training. Alongside that I work as a floor manager coordinating a team, which taught me to stay organized, solve problems under pressure and own what I promise.",
+      es: "Estoy arrancando en esto y lo tomo en serio: trabajo a diario con agentes de programación como Claude Code y Codex, y reviso y depuro cada cambio antes de que llegue a producción. En paralelo trabajo como jefe de piso coordinando un equipo, algo que me enseñó a organizarme, resolver bajo presión y hacerme cargo de lo que prometo.",
+      en: "I am starting out in this and I take it seriously: I work daily with coding agents like Claude Code and Codex, and I review and debug every change before it reaches production. Alongside that I work as a floor manager coordinating a team, which taught me to stay organized, solve problems under pressure and own what I promise.",
     },
     downloadCv: { es: "Descargar CV", en: "Download CV" },
   },

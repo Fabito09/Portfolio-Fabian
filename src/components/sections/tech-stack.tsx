@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import {
+  Bot,
   Code2,
   Database,
   Handshake,
@@ -20,7 +21,7 @@ import {
 } from "@/components/ui/circular-gallery";
 
 /** Un icono por grupo, en el mismo orden que stackGroups. */
-const GROUP_ICONS = [Code2, Server, Database, Wrench, Languages, Handshake];
+const GROUP_ICONS = [Code2, Server, Database, Bot, Wrench, Languages, Handshake];
 
 /** El carrusel necesita medidas en píxeles: más chicas en celular. */
 function useCardSize() {

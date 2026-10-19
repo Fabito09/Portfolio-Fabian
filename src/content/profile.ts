@@ -34,10 +34,7 @@ export type StackGroup = {
   items: Array<string | Localized>;
 };
 
-/**
- * Todo sale del CV, salvo React, Next.js y Tailwind CSS: esos los sumás con
- * este portafolio, que está construido con los tres.
- */
+/** Todo sale de la sección de habilidades del CV. */
 export const stackGroups: StackGroup[] = [
   {
     label: { es: "Frontend", en: "Frontend" },
@@ -60,8 +57,18 @@ export const stackGroups: StackGroup[] = [
     items: ["PostgreSQL", "Supabase", "SQL"],
   },
   {
+    label: { es: "Inteligencia artificial", en: "Artificial intelligence" },
+    items: [
+      "Claude Code",
+      "Codex",
+      "Gemini",
+      { es: "Ingeniería de prompts", en: "Prompt engineering" },
+      { es: "Debugging asistido con IA", en: "AI-assisted debugging" },
+    ],
+  },
+  {
     label: { es: "Herramientas", en: "Tools" },
-    items: ["Git", "Vercel", "Render", "Claude Code"],
+    items: ["Git", "Vercel", "Render", "Excel"],
   },
   {
     label: { es: "Idiomas", en: "Languages" },
@@ -92,28 +99,31 @@ export type TimelineEntry = {
 export const timeline: TimelineEntry[] = [
   {
     id: "freelance",
-    period: { es: "Actualidad", en: "Currently" },
+    period: { es: "Febrero 2026 — Presente", en: "February 2026 — Present" },
     title: {
       es: "Desarrollador Full Stack",
       en: "Full Stack Developer",
     },
     organization: { es: "Freelance · Costa Rica", en: "Freelance · Costa Rica" },
     description: {
-      es: "Diseño y desarrollo de páginas web para clientes particulares. Frontend con JavaScript y TypeScript, APIs REST con Python (FastAPI y Flask), bases de datos PostgreSQL y Supabase, y despliegue en Vercel y Render.",
-      en: "I design and build websites for private clients. Frontend with JavaScript and TypeScript, REST APIs with Python (FastAPI and Flask), PostgreSQL and Supabase databases, and deployment on Vercel and Render.",
+      es: "Aplicaciones web de punta a punta, del requerimiento al despliegue: APIs REST con Python (FastAPI y Flask) sobre PostgreSQL y Supabase, e interfaces con React y Next.js. Además automatizo tareas repetitivas de los clientes.",
+      en: "End-to-end web applications, from requirements to deployment: REST APIs with Python (FastAPI and Flask) on PostgreSQL and Supabase, and interfaces with React and Next.js. I also automate my clients' repetitive tasks.",
     },
   },
   {
     id: "cenfotec",
-    period: { es: "Febrero 2025 — Presente", en: "February 2025 — Present" },
+    period: { es: "Febrero 2026 — Octubre 2026", en: "February 2026 — October 2026" },
     title: {
-      es: "Programación Asistida por Inteligencia Artificial",
-      en: "AI-Assisted Programming",
+      es: "Técnico en Programación Asistida con IA",
+      en: "AI-Assisted Programming Technician",
     },
-    organization: { es: "Cenfotec · San José", en: "Cenfotec · San José" },
+    organization: {
+      es: "Universidad CENFOTEC · San José",
+      en: "Universidad CENFOTEC · San José",
+    },
     description: {
-      es: "Formación técnica en curso, enfocada en desarrollo de software apoyado en herramientas de inteligencia artificial.",
-      en: "Ongoing technical training focused on software development supported by artificial intelligence tools.",
+      es: "Plan de estudios completado: 10 cursos y 176 horas, de Python avanzado a automatización de procesos, verificación de código y debugging asistido con IA generativa.",
+      en: "Completed program: 10 courses and 176 hours, from advanced Python to process automation, code verification and debugging assisted by generative AI.",
     },
   },
   {
@@ -128,21 +138,8 @@ export const timeline: TimelineEntry[] = [
       en: "Kracovia Coffee Shop · San José",
     },
     description: {
-      es: "Supervisión y coordinación del personal durante el turno, control de inventario para reducir pérdidas y desabastecimiento, y organización de los turnos del equipo.",
-      en: "Supervising and coordinating staff during the shift, managing inventory to reduce waste and stockouts, and organizing the team's schedule.",
-    },
-  },
-  {
-    id: "certificaciones",
-    period: { es: "Certificaciones", en: "Certifications" },
-    title: {
-      es: "Python Avanzado · Programación con Inteligencia Artificial",
-      en: "Advanced Python · Programming with Artificial Intelligence",
-    },
-    organization: { es: "Cenfotec", en: "Cenfotec" },
-    description: {
-      es: "Dos certificaciones completadas que respaldan mi nivel en Python y en el uso de inteligencia artificial aplicada al desarrollo.",
-      en: "Two completed certifications backing my level in Python and in applying artificial intelligence to development.",
+      es: "Coordinación del personal en turno y estandarización del servicio para sostener los tiempos de atención en horas pico, control de inventario para reducir pérdidas y quiebres de stock, y organización de turnos según la demanda.",
+      en: "Coordinating staff on shift and standardizing service to keep wait times steady at peak hours, managing inventory to cut waste and stockouts, and scheduling shifts around demand.",
     },
   },
   {
