@@ -28,18 +28,19 @@ function shortestAngleDelta(from: number, to: number) {
   return delta;
 }
 
+/** Espacio entre dos tarjetas vecinas, en píxeles. Sin él se ven pegadas. */
+const CARD_GAP_PX = 32;
+
 /**
  * Separación entre el centro y las tarjetas. Se calcula en vez de fijarse a
- * ojo: con N tarjetas repartidas en la circunferencia, este es el radio
- * mínimo para que no se solapen, más un margen de respiro.
+ * ojo: con N tarjetas repartidas en la circunferencia, es el radio en el que
+ * cada una ocupa su ancho más el espacio libre hasta la siguiente.
  */
 function radiusFor(itemCount: number, cardWidth: number) {
   if (itemCount < 2) return 0;
-  const minimum = cardWidth / 2 / Math.tan(Math.PI / itemCount);
-  // Un poco por debajo del mínimo: las tarjetas se solapan apenas, lo que en
-  // 3D se lee como profundidad y evita que el centro quede hueco cuando el
-  // giro cae justo entre dos.
-  return Math.round(minimum * 0.95);
+  return Math.round(
+    (cardWidth + CARD_GAP_PX) / 2 / Math.tan(Math.PI / itemCount),
+  );
 }
 
 /**
