@@ -9,12 +9,19 @@ export type AnimatedStackItem = {
   content: React.ReactNode;
 };
 
-/** Posición de cada tarjeta según su profundidad en la pila. */
+/**
+ * Posición de cada tarjeta según su profundidad en la pila. Las de atrás se
+ * oscurecen con brillo y no con opacidad: una tarjeta semitransparente deja
+ * ver el texto de la que tiene detrás y los dos textos se superponen.
+ */
 const DEPTH_STYLES = [
-  { scale: 1, y: 0, opacity: 1 },
-  { scale: 0.95, y: -20, opacity: 0.6 },
-  { scale: 0.9, y: -40, opacity: 0.3 },
+  { scale: 1, y: 0, brightness: 1 },
+  { scale: 0.95, y: -20, brightness: 0.6 },
+  { scale: 0.9, y: -40, brightness: 0.35 },
 ];
+
+/** El brillo va con una transición propia: el resorte es para mover, no para colores. */
+const BRIGHTNESS_TRANSITION = { duration: 0.4, ease: "easeOut" } as const;
 
 const VISIBLE_CARDS = DEPTH_STYLES.length;
 
@@ -81,18 +88,29 @@ export function AnimatedCardStack({
       <div className="relative h-[340px] w-full sm:h-[300px]">
         <AnimatePresence initial={false}>
           {visible.map(({ item, depth }) => {
-            const { scale, y, opacity } = DEPTH_STYLES[depth]!;
+            const { scale, y, brightness } = DEPTH_STYLES[depth]!;
             return (
               <motion.div
                 key={item.id}
-                initial={reduceMotion ? false : { y: -40, scale: 0.9, opacity: 0 }}
-                animate={{ y, scale, opacity }}
+                initial={
+                  reduceMotion
+                    ? false
+                    : { y: -40, scale: 0.9, opacity: 0, filter: "brightness(0.35)" }
+                }
+                animate={{ y, scale, opacity: 1, filter: `brightness(${brightness})` }}
+                // La que se va cae por detrás de la nueva tarjeta del frente, que
+                // es opaca: así nunca se cruzan dos textos a la vista.
                 exit={
                   reduceMotion
                     ? undefined
-                    : { y: 260, opacity: 0, scale: 1, zIndex: 20 }
+                    : { y: 260, opacity: 0, scale: 1, zIndex: 0 }
                 }
-                transition={{ type: "spring", duration: 0.9, bounce: 0 }}
+                transition={{
+                  type: "spring",
+                  duration: 0.9,
+                  bounce: 0,
+                  filter: BRIGHTNESS_TRANSITION,
+                }}
                 style={{
                   zIndex: VISIBLE_CARDS - depth,
                   left: "50%",
@@ -104,7 +122,8 @@ export function AnimatedCardStack({
                 // puntos de abajo, que sí son botones.
                 onClick={depth === 0 ? goToNext : undefined}
                 className={cn(
-                  "absolute w-full max-w-[560px] will-change-transform",
+                  // select-none: con los clics para avanzar se pintaba texto seleccionado.
+                  "absolute w-full max-w-[560px] select-none will-change-transform",
                   depth === 0 && "cursor-pointer",
                 )}
               >

@@ -51,7 +51,7 @@ function TimelineCard({ entry }: { entry: TimelineEntry }) {
   const { t } = useLanguage();
 
   return (
-    <article className="flex h-[280px] flex-col rounded-2xl border border-white/12 bg-neutral-900/92 p-6 shadow-2xl shadow-black/40 backdrop-blur-xl sm:h-[250px] sm:p-7">
+    <article className="flex h-[280px] flex-col rounded-2xl border border-white/12 bg-neutral-900 p-6 shadow-2xl shadow-black/40 sm:h-[250px] sm:p-7">
       <p className="font-mono text-xs tracking-wider text-white/45">
         {t(entry.period)}
       </p>
