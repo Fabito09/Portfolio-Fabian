@@ -4,7 +4,10 @@ import * as React from "react";
 import { CardStack, type CardStackItem } from "@/components/ui/card-stack";
 import { useLanguage } from "@/i18n/language-provider";
 import { uiText } from "@/content/ui-text";
-import { PLACEHOLDER_CARD_COUNT, type Project } from "@/content/projects";
+import { CAROUSEL_CARD_COUNT, type Project } from "@/content/projects";
+
+/** Prefijo de id que marca una tarjeta en blanco de "Próximamente". */
+const PLACEHOLDER_ID_PREFIX = "placeholder-";
 
 /** Proporción de las tarjetas (alto ÷ ancho), tomada del diseño original. */
 const CARD_ASPECT = 320 / 520;
@@ -97,33 +100,33 @@ export function ProjectsCarousel({
   projects: Project[];
   autoAdvance?: boolean;
   intervalMs?: number;
-  /** Avisa qué proyecto quedó al frente, para paneles de detalle. */
-  onActiveChange?: (project: Project) => void;
+  /** Avisa qué proyecto quedó al frente, o undefined si es una de "Próximamente". */
+  onActiveChange?: (project: Project | undefined) => void;
 }) {
   const { t, language } = useLanguage();
   const layout = useCardLayout();
-  const isEmpty = projects.length === 0;
 
   const items: CardStackItem[] = React.useMemo(() => {
-    if (isEmpty) {
-      // Tarjetas en blanco: mantienen vivo el carrusel mientras no haya
-      // proyectos que mostrar, sin inventar contenido que no existe.
-      return Array.from({ length: PLACEHOLDER_CARD_COUNT }, (_, index) => ({
-        id: `placeholder-${index}`,
-        title: "",
-      }));
-    }
-    return projects.map((project) => ({
+    const projectCards = projects.map((project) => ({
       id: project.id,
       title: project.title,
       description: t(project.tagline),
       tag: t(project.tag),
       imageSrc: project.imageSrc,
+      videoSrc: project.videoSrc,
       href: project.demoUrl ?? project.repoUrl,
     }));
+    // Tarjetas en blanco hasta completar el carrusel: lo mantienen lleno
+    // mientras haya pocos proyectos, sin inventar contenido que no existe.
+    const placeholderCount = Math.max(0, CAROUSEL_CARD_COUNT - projects.length);
+    const placeholderCards = Array.from({ length: placeholderCount }, (_, index) => ({
+      id: `${PLACEHOLDER_ID_PREFIX}${index}`,
+      title: "",
+    }));
+    return [...projectCards, ...placeholderCards];
     // `t` cambia con el idioma, y de eso depende el texto traducido.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [projects, language, isEmpty]);
+  }, [projects, language]);
 
   return (
     <CardStack
@@ -134,14 +137,14 @@ export function ProjectsCarousel({
       showDots
       showActiveTitle
       loop
-      renderCard={isEmpty ? () => <EmptyCard label={t(uiText.projects.comingSoon)} /> : undefined}
+      // null deja que el CardStack dibuje la tarjeta del proyecto con su diseño.
+      renderCard={(item) =>
+        String(item.id).startsWith(PLACEHOLDER_ID_PREFIX) ? (
+          <EmptyCard label={t(uiText.projects.comingSoon)} />
+        ) : null
+      }
       onChangeIndex={
-        onActiveChange
-          ? (index) => {
-              const project = projects[index];
-              if (project) onActiveChange(project);
-            }
-          : undefined
+        onActiveChange ? (index) => onActiveChange(projects[index]) : undefined
       }
       {...layout}
     />

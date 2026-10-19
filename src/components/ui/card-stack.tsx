@@ -11,6 +11,8 @@ export type CardStackItem = {
   title: string;
   description?: string;
   imageSrc?: string;
+  /** Video sin sonido en bucle; imageSrc se usa de portada mientras carga. */
+  videoSrc?: string;
   href?: string;
   ctaLabel?: string;
   tag?: string;
@@ -64,7 +66,7 @@ export type CardStackProps<T extends CardStackItem> = {
   /** Hooks */
   onChangeIndex?: (index: number, item: T) => void;
 
-  /** Custom renderer (optional) */
+  /** Custom renderer (optional). Si devuelve null, esa tarjeta usa el diseño por defecto. */
   renderCard?: (item: T, state: { active: boolean }) => React.ReactNode;
 };
 
@@ -334,13 +336,12 @@ export function CardStack<T extends CardStackItem>({
                       transformStyle: "preserve-3d",
                     }}
                   >
-                    {renderCard ? (
-                      renderCard(item, { active: isActive })
-                    ) : (
+                    {renderCard?.(item, { active: isActive }) ?? (
                       <DefaultFanCard
                         item={item}
                         active={isActive}
                         showText={!showActiveTitle}
+                        reduceMotion={reduceMotion ?? false}
                       />
                     )}
                   </div>
@@ -428,25 +429,43 @@ function DefaultFanCard({
   item,
   active,
   showText,
+  reduceMotion,
 }: {
   item: CardStackItem;
   active: boolean;
   /** Sin texto, la tarjeta muestra solo la imagen. */
   showText: boolean;
+  /** Con movimiento reducido el video no arranca solo y queda la portada. */
+  reduceMotion: boolean;
 }) {
+  const mediaClassName = cn(
+    "h-full w-full object-cover transition-all duration-500",
+    active ? "scale-100 brightness-100" : "scale-105 brightness-75",
+  );
+
   return (
     <div className="relative h-full w-full bg-neutral-900">
       {/* image */}
       <div className="absolute inset-0">
-        {item.imageSrc ? (
+        {item.videoSrc ? (
+          <video
+            src={item.videoSrc}
+            poster={item.imageSrc}
+            aria-label={item.title}
+            className={mediaClassName}
+            autoPlay={!reduceMotion}
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            draggable={false}
+          />
+        ) : item.imageSrc ? (
           /* eslint-disable-next-line @next/next/no-img-element */
           <img
             src={item.imageSrc}
             alt={item.title}
-            className={cn(
-              "h-full w-full object-cover transition-all duration-500",
-              active ? "scale-100 brightness-100" : "scale-105 brightness-75",
-            )}
+            className={mediaClassName}
             draggable={false}
             loading="eager"
           />
