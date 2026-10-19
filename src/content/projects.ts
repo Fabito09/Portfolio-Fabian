@@ -52,4 +52,4 @@ export const projects: Project[] = [
 ];
 
 /** Tarjetas que tiene el carrusel en total, contando las de "Próximamente". */
-export const CAROUSEL_CARD_COUNT = 5;
+export const CAROUSEL_CARD_COUNT = 3;
