@@ -115,7 +115,7 @@ export const timeline: TimelineEntry[] = [
     period: { es: "Febrero 2026 — Octubre 2026", en: "February 2026 — October 2026" },
     title: {
       es: "Técnico en Programación Asistida con IA",
-      en: "AI-Assisted Programming Technician",
+      en: "Technical Diploma in AI-Assisted Programming",
     },
     organization: {
       es: "Universidad CENFOTEC · San José",
@@ -131,7 +131,7 @@ export const timeline: TimelineEntry[] = [
     period: { es: "Marzo 2025 — Presente", en: "March 2025 — Present" },
     title: {
       es: "Jefe de Piso / Administrador de Turno",
-      en: "Floor Manager / Shift Supervisor",
+      en: "Floor Supervisor / Shift Manager",
     },
     organization: {
       es: "Cafetería Kracovia · San José",
