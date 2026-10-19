@@ -132,6 +132,7 @@ export function ProjectsCarousel({
       intervalMs={intervalMs}
       pauseOnHover
       showDots
+      showActiveTitle
       loop
       renderCard={isEmpty ? () => <EmptyCard label={t(uiText.projects.comingSoon)} /> : undefined}
       onChangeIndex={

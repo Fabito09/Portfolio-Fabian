@@ -57,6 +57,8 @@ export type CardStackProps<T extends CardStackItem> = {
 
   /** UI */
   showDots?: boolean;
+  /** Muestra la etiqueta y el título de la tarjeta activa encima de ella, en vez de sobre la imagen. */
+  showActiveTitle?: boolean;
   className?: string;
 
   /** Hooks */
@@ -109,6 +111,7 @@ export function CardStack<T extends CardStackItem>({
   pauseOnHover = true,
 
   showDots = true,
+  showActiveTitle = false,
   className,
 
   onChangeIndex,
@@ -188,6 +191,12 @@ export function CardStack<T extends CardStackItem>({
   if (!len) return null;
 
   const activeItem = items[active]!;
+
+  // La tarjeta activa está apoyada abajo, subida `activeLiftPx` y agrandada
+  // desde el centro; el título se apoya 12px por encima de su borde superior.
+  const activeTitleBottom = Math.round(
+    cardHeight * (1 + (activeScale - 1) / 2) + activeLiftPx + 12,
+  );
 
   return (
     <div
@@ -328,7 +337,11 @@ export function CardStack<T extends CardStackItem>({
                     {renderCard ? (
                       renderCard(item, { active: isActive })
                     ) : (
-                      <DefaultFanCard item={item} active={isActive} />
+                      <DefaultFanCard
+                        item={item}
+                        active={isActive}
+                        showText={!showActiveTitle}
+                      />
                     )}
                   </div>
                 </motion.div>
@@ -336,6 +349,34 @@ export function CardStack<T extends CardStackItem>({
             })}
           </AnimatePresence>
         </div>
+
+        {showActiveTitle && activeItem.title ? (
+          <div
+            className="pointer-events-none absolute inset-x-0 z-[200] flex justify-center px-4"
+            style={{ bottom: activeTitleBottom }}
+          >
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.div
+                key={activeItem.id}
+                className="text-center"
+                style={{ maxWidth: cardWidth }}
+                initial={reduceMotion ? false : { opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={reduceMotion ? undefined : { opacity: 0, y: -6 }}
+                transition={{ duration: 0.2, ease: "easeOut" }}
+              >
+                {activeItem.tag ? (
+                  <div className="text-[11px] font-medium uppercase tracking-[0.2em] text-white/50">
+                    {activeItem.tag}
+                  </div>
+                ) : null}
+                <div className="mt-1 truncate font-heading text-xl font-semibold text-white sm:text-2xl">
+                  {activeItem.title}
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        ) : null}
       </div>
 
       {/* Dots navigation centered at bottom */}
@@ -386,9 +427,12 @@ export function CardStack<T extends CardStackItem>({
 function DefaultFanCard({
   item,
   active,
+  showText,
 }: {
   item: CardStackItem;
   active: boolean;
+  /** Sin texto, la tarjeta muestra solo la imagen. */
+  showText: boolean;
 }) {
   return (
     <div className="relative h-full w-full bg-neutral-900">
@@ -413,25 +457,29 @@ function DefaultFanCard({
         )}
       </div>
 
-      {/* subtle gradient overlay at bottom for text readability */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
+      {showText ? (
+        <>
+          {/* subtle gradient overlay at bottom for text readability */}
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
 
-      {/* content */}
-      <div className="relative z-10 flex h-full flex-col justify-end p-5">
-        {item.tag ? (
-          <span className="mb-2 w-fit rounded-full border border-white/20 bg-white/10 px-2.5 py-0.5 text-[11px] font-medium tracking-wide text-white/90 backdrop-blur-sm">
-            {item.tag}
-          </span>
-        ) : null}
-        <div className="truncate font-heading text-xl font-semibold text-white">
-          {item.title}
-        </div>
-        {item.description ? (
-          <div className="mt-1 line-clamp-2 text-sm text-white/80">
-            {item.description}
+          {/* content */}
+          <div className="relative z-10 flex h-full flex-col justify-end p-5">
+            {item.tag ? (
+              <span className="mb-2 w-fit rounded-full border border-white/20 bg-white/10 px-2.5 py-0.5 text-[11px] font-medium tracking-wide text-white/90 backdrop-blur-sm">
+                {item.tag}
+              </span>
+            ) : null}
+            <div className="truncate font-heading text-xl font-semibold text-white">
+              {item.title}
+            </div>
+            {item.description ? (
+              <div className="mt-1 line-clamp-2 text-sm text-white/80">
+                {item.description}
+              </div>
+            ) : null}
           </div>
-        ) : null}
-      </div>
+        </>
+      ) : null}
     </div>
   );
 }

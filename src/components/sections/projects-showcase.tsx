@@ -100,9 +100,12 @@ export function ProjectsShowcase() {
         </div>
         ) : null}
 
-        <p className="mt-10 text-center text-xs text-white/35">
-          {t(activeProject ? uiText.projects.hint : uiText.projects.emptyHint)}
-        </p>
+        {/* Con una sola tarjeta no hay nada que arrastrar ni navegar. */}
+        {projects.length !== 1 ? (
+          <p className="mt-10 text-center text-xs text-white/35">
+            {t(activeProject ? uiText.projects.hint : uiText.projects.emptyHint)}
+          </p>
+        ) : null}
       </div>
     </section>
   );

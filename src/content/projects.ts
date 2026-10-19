@@ -33,7 +33,20 @@ export type Project = {
  *   demoUrl: "https://tu-demo.vercel.app",
  * },
  */
-export const projects: Project[] = [];
+export const projects: Project[] = [
+  {
+    id: "la-mochilera",
+    title: "La Mochilera",
+    tag: { es: "Tienda en línea", en: "Online store" },
+    tagline: {
+      es: "Tienda en línea para una marca costarricense de botas de cuero: catálogo con filtros, pedidos por WhatsApp y un panel para que la marca administre sus productos.",
+      en: "Online store for a Costa Rican leather boot brand: a filterable catalog, orders through WhatsApp and an admin panel so the brand can manage its own products.",
+    },
+    tech: ["Next.js", "TypeScript", "Tailwind CSS", "Payload CMS", "PostgreSQL"],
+    imageSrc: "/proyectos/la-mochilera.webp",
+    demoUrl: "https://la-mochilera.vercel.app",
+  },
+];
 
 /** Tarjetas en blanco que se muestran mientras no haya proyectos cargados. */
 export const PLACEHOLDER_CARD_COUNT = 5;
