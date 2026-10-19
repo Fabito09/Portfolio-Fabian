@@ -16,10 +16,6 @@ export const uiText = {
   },
 
   hero: {
-    kicker: {
-      es: "Desarrollador Fullstack",
-      en: "Fullstack Developer",
-    },
     headline: {
       es: "Construyo páginas web que se sienten bien de usar",
       en: "I build websites that feel good to use",

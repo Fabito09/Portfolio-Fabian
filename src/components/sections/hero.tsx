@@ -20,15 +20,7 @@ export function Hero() {
       className="relative flex min-h-svh flex-col items-center justify-center px-5 py-28 sm:px-8"
     >
       <div className="hero-stagger mx-auto w-full max-w-3xl text-center">
-        <p className="mx-auto flex w-fit items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-white/70 backdrop-blur-md">
-          <span className="relative flex h-1.5 w-1.5">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
-          </span>
-          {t(uiText.hero.kicker)}
-        </p>
-
-        <h1 className="mt-7 font-heading text-5xl font-bold leading-[1.05] tracking-tight text-white sm:text-7xl">
+        <h1 className="font-heading text-5xl font-bold leading-[1.05] tracking-tight text-white sm:text-7xl">
           {profile.name}
         </h1>
 
